@@ -45,7 +45,7 @@
             <th>{{ item.id }}</th>
             <td>
               <figure class="image is-128x128">
-                <a :href="`/admin/films/${item.slug}`">
+                <a :href="`/films/${item.slug}`">
                   <img :src="`${baseImgUrl}/storage/images/${item.photo}`" width="128" height="128" style="clear: both; max-height: 100px;">
                 </a>
               </figure>
@@ -55,7 +55,7 @@
             <td>{{ item.created_at }}</td>
             <td>{{ item.updated_at }}</td>
             <td>
-              <a :href="`/admin/films/${item.slug}`" class="button is-small">Detail</a>
+              <a :href="`/films/${item.slug}`" class="button is-small">Detail</a>
               <!-- <a href="javascript:;" class="button is-small is-danger">Delete</a> -->
             </td>
           </tr>

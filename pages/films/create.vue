@@ -196,7 +196,7 @@ export default {
             // console.log(this.formErrors.length)
           }
           if (responseJson.success) {
-            this.$router.push("/admin/films");
+            this.$router.push("/films");
           }
         })
         .catch(error => {
