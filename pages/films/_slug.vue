@@ -13,60 +13,57 @@
     </div>
     <hr>
     <div class="container">
-      <h2 class="list-gallery">Detail Of Film</h2>
-      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-        <thead>
-          <tr>
-            <th><abbr title="ID">ID</abbr></th>
-            <th>Photo</th>
-            <th><abbr title="Title">Title</abbr></th>
-            <th><abbr title="Description">Description</abbr></th>
-            <th><abbr title="Rating">Rating</abbr></th>
-            <th><abbr title="Price">Price</abbr></th>
-            <th><abbr title="Country">Country</abbr></th>
-            <th><abbr title="Genre">Genre</abbr></th>
-            <th><abbr title="Created">Created</abbr></th>
-            <th><abbr title="Updated">Updated</abbr></th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <!-- <tfoot>
-          <tr>
-            <th><abbr title="Position">Pos</abbr></th>
-            <th>Team</th>
-            <th><abbr title="Played">Pld</abbr></th>
-            <th><abbr title="Won">W</abbr></th>
-            <th><abbr title="Drawn">D</abbr></th>
-            <th><abbr title="Lost">L</abbr></th>
-            <th><abbr title="Goals for">GF</abbr></th>
-            <th><abbr title="Goals against">GA</abbr></th>
-            <th><abbr title="Goal difference">GD</abbr></th>
-            <th><abbr title="Points">Pts</abbr></th>
-            <th>Qualification or relegation</th>
-          </tr>
-        </tfoot> -->
-        <tbody>
-          <tr>
-            <th>{{ item.id }}</th>
-            <td>
-              <figure class="image is-128x128">
-                <img :src="`${baseImgUrl}/storage/images/${item.photo}`" width="128" height="128" style="clear: both; max-height: 100px;">
+      <div class="content">
+        <h5>{{ item.title }} detail</h5>
+        <hr class="is-clearfix">
+        <figure>
+          <img :src="`${baseImgUrl}/storage/images/${item.photo}`">
+          <figcaption>
+            Photo: {{ item.title }}
+          </figcaption>
+        </figure>
+        <p><span class="tag is-info">Rating: {{ item.rating }}</span><span class="tag is-info">Price: {{ item.price }}</span><span class="tag is-info">Country: {{ item.country }}</span><span class="tag is-info">Genre: {{ item.genre }}</span></p>
+        <h5>Description <span class="tag is-info">Last updated: {{ item.updated_at }}</span></h5>
+        <p>{{ item.description }}</p>
+        <h5>Comments</h5>
+        <div class="box" v-for="(comment, index) in item.comments" :key="index">
+          <article class="media">
+            <div class="media-left">
+              <figure class="image is-64x64">
+                <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
               </figure>
-            </td>
-            <td>{{ item.title }}</td>
-            <td>{{ item.description }}</td>
-            <td>{{ item.rating }}</td>
-            <td>{{ item.price }}</td>
-            <td>{{ item.country }}</td>
-            <td>{{ item.genre }}</td>
-            <td>{{ item.created_at }}</td>
-            <td>{{ item.updated_at }}</td>
-            <td>
-              <a href="javascript:;" class="button is-small is-danger">Delete</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </div>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
+                  <br>
+                  {{ comment.comment }}
+                </p>
+              </div>
+              <nav class="level is-mobile">
+                <div class="level-left">
+                  <a class="level-item" aria-label="reply">
+                    <span class="icon is-small">
+                      <i class="fas fa-reply" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                  <a class="level-item" aria-label="retweet">
+                    <span class="icon is-small">
+                      <i class="fas fa-retweet" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                  <a class="level-item" aria-label="like">
+                    <span class="icon is-small">
+                      <i class="fas fa-heart" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                </div>
+              </nav>
+            </div>
+          </article>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -163,5 +160,10 @@ export default {
 .row {
   -webkit-flex-direction: row;
   flex-direction: row;
+}
+
+p > span {
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 </style>

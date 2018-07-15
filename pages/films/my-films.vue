@@ -13,63 +13,40 @@
     </div>
     <hr>
     <div class="container">
-      <h2 class="list-gallery">List Of Films</h2>
-      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-        <thead>
-          <tr>
-            <th><abbr title="ID">ID</abbr></th>
-            <th>Photo</th>
-            <th><abbr title="Title">Title</abbr></th>
-            <th><abbr title="Description">Description</abbr></th>
-            <th><abbr title="Rating">Rating</abbr></th>
-            <th><abbr title="Price">Price</abbr></th>
-            <th><abbr title="Country">Country</abbr></th>
-            <th><abbr title="Genre">Genre</abbr></th>
-            <th><abbr title="Created">Created</abbr></th>
-            <th><abbr title="Updated">Updated</abbr></th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <!-- <tfoot>
-          <tr>
-            <th><abbr title="Position">Pos</abbr></th>
-            <th>Team</th>
-            <th><abbr title="Played">Pld</abbr></th>
-            <th><abbr title="Won">W</abbr></th>
-            <th><abbr title="Drawn">D</abbr></th>
-            <th><abbr title="Lost">L</abbr></th>
-            <th><abbr title="Goals for">GF</abbr></th>
-            <th><abbr title="Goals against">GA</abbr></th>
-            <th><abbr title="Goal difference">GD</abbr></th>
-            <th><abbr title="Points">Pts</abbr></th>
-            <th>Qualification or relegation</th>
-          </tr>
-        </tfoot> -->
-        <tbody>
-          <tr v-for="(item, index) in films" :key="index">
-            <th>{{ item.id }}</th>
-            <td>
-              <figure class="image is-128x128">
-                <a :href="`/films/${item.slug}`">
-                  <img :src="`${baseImgUrl}/storage/images/${item.photo}`" width="128" height="128" style="clear: both; max-height: 100px;">
-                </a>
+      <h1 class="title">List Of My Films</h1>
+      <div class="columns is-desktop is-multiline">
+        <div class="column is-one-quarter" v-for="(item, index) in films" :key="index">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <a :href="`/films/${item.slug}`"><img :src="`${baseImgUrl}/storage/images/${item.photo}`"></a>
               </figure>
-            </td>
-            <td>{{ item.title }}</td>
-            <td>{{ item.description }}</td>
-            <td>{{ item.rating }}</td>
-            <td>{{ item.price }}</td>
-            <td>{{ item.country }}</td>
-            <td>{{ item.genre }}</td>
-            <td>{{ item.created_at }}</td>
-            <td>{{ item.updated_at }}</td>
-            <td>
-              <a :href="`/films/${item.slug}`" class="button is-small">Detail</a>
-              <!-- <a href="javascript:;" class="button is-small is-danger">Delete</a> -->
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </div>
+            <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-48x48">
+                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Avatar image">
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <p class="title is-4">{{ item.title }}</p>
+                  <p class="subtitle is-6">@johnsmith</p>
+                </div>
+              </div>
+
+              <div class="content">
+                {{ item.description }}
+                <a :href="`/films/${item.slug}`">read more</a>
+                <br>
+                <p><span class="tag is-info">Rating: {{ item.rating }}</span><span class="tag is-info">Price: {{ item.price }}</span><span class="tag is-info">Country: {{ item.country }}</span><span class="tag is-info">Genre: {{ item.genre }}</span></p>
+                <br>
+                Released: <time datetime="`${item.release_on}`">{{ item.release_on }}</time>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -165,5 +142,10 @@ export default {
 .row {
   -webkit-flex-direction: row;
   flex-direction: row;
+}
+
+p > span {
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 </style>
