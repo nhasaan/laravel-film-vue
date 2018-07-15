@@ -63,6 +63,34 @@
             </div>
           </article>
         </div>
+        <div class="">
+          <div class="columns is-desktop">
+            <div class="field">
+              <p class="control has-icons-left has-icons-right">
+                <input v-validate="'required'" v-model="comment" :class="{'input': true, 'is-danger': errors.has('comment') }" type="text" name="comment" placeholder="Comment">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-title"/>
+                </span>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-check"/>
+                </span>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-check"/>
+                  <i v-show="errors.has('comment')" class="fa fa-warning"/>
+                </span>
+                <span v-show="errors.has('comment')" class="help is-danger">{{ errors.first('comment') }}</span>
+              </p>
+            </div>
+
+            <div class="field">
+              <p class="control">
+                <button type="button" class="button is-success" @click="addComment(item)">
+                  Save
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -77,6 +105,7 @@ export default {
   },
   data() {
     return {
+      comment: "",
       baseImgUrl: process.env.baseImgUrl,
       headers: { Authorization: `Bearer ${this.$store.state.authUser}` }
     };
@@ -94,6 +123,37 @@ export default {
       item: await response.json(),
       headers: { Authorization: `Bearer ${store.state.authUser}` }
     };
+  },
+  methods: {
+    async addComment(film) {
+      this.$nuxt.$loading.start();
+      const url = `${process.env.baseUrl}/films/${film.id}/comments`;
+      await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.$store.state.authUser}`,
+          "Content-Type": "Application/json"
+        },
+        body: JSON.stringify({
+          comment: this.comment
+        })
+      });
+
+      // let comments = await fetch(
+      //   `${process.env.baseUrl}/films/${params.slug}`,
+      //   {
+      //     method: "GET",
+      //     headers: { Authorization: `Bearer ${this.$store.state.authUser}` }
+      //   }
+      // );
+      // return {
+      //   item: comments.json()
+      // };
+
+      this.$nuxt.$loading.finish();
+
+      window.location.reload(true);
+    }
   }
 };
 </script>
