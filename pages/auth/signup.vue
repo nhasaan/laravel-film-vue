@@ -6,6 +6,9 @@
         Laravel Film
       </h1>
       <div class="container links">
+        <nuxt-link to="/films" class="button--green">All films</nuxt-link>
+        <nuxt-link to="/films/my-films" class="button--green">My films</nuxt-link>
+        <nuxt-link to="/films/create" class="button--green">Create film</nuxt-link>
         <h2 class="subtitle">Films Signup</h2>
       </div>
     </div>

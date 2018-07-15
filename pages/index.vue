@@ -11,6 +11,7 @@
       <div class="links">
         <nuxt-link to="/auth/signin" class="button--grey">Signin</nuxt-link>
         <nuxt-link to="/auth/signup" class="button--grey">Signup</nuxt-link>
+        <nuxt-link to="/films" class="button--green">All films</nuxt-link>
       </div>
     </div>
   </section>

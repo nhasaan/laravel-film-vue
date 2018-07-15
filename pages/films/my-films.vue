@@ -13,7 +13,7 @@
     </div>
     <hr>
     <div class="container">
-      <h2 class="list-gallery">Detail Of Film</h2>
+      <h2 class="list-gallery">List Of Films</h2>
       <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
           <tr>
@@ -46,11 +46,13 @@
           </tr>
         </tfoot> -->
         <tbody>
-          <tr>
+          <tr v-for="(item, index) in films" :key="index">
             <th>{{ item.id }}</th>
             <td>
               <figure class="image is-128x128">
-                <img :src="`${baseImgUrl}/storage/images/${item.photo}`" width="128" height="128" style="clear: both; max-height: 100px;">
+                <a :href="`/films/${item.slug}`">
+                  <img :src="`${baseImgUrl}/storage/images/${item.photo}`" width="128" height="128" style="clear: both; max-height: 100px;">
+                </a>
               </figure>
             </td>
             <td>{{ item.title }}</td>
@@ -62,7 +64,8 @@
             <td>{{ item.created_at }}</td>
             <td>{{ item.updated_at }}</td>
             <td>
-              <a href="javascript:;" class="button is-small is-danger">Delete</a>
+              <a :href="`/films/${item.slug}`" class="button is-small">Detail</a>
+              <!-- <a href="javascript:;" class="button is-small is-danger">Delete</a> -->
             </td>
           </tr>
         </tbody>
@@ -78,23 +81,22 @@ export default {
   components: {
     AppLogo
   },
+  middleware: "auth",
   data() {
     return {
       baseImgUrl: process.env.baseImgUrl,
       headers: { Authorization: `Bearer ${this.$store.state.authUser}` }
     };
   },
-  async asyncData({ store, params }) {
-    // console.log("params: " + params.slug);
-    // return false;
-    store.commit("SET_HEAD", ["Film detail", "Film detail here"]);
-    let response = await fetch(`${process.env.baseUrl}/films/${params.slug}`, {
-      method: "GET",
+  async asyncData({ store, env }) {
+    store.commit("SET_HEAD", ["Film gallery", "Manage your films here"]);
+    let response = await fetch(`${env.baseUrl}/films/mine`, {
+      method: "POST",
       headers: { Authorization: `Bearer ${store.state.authUser}` }
     });
 
     return {
-      item: await response.json(),
+      films: await response.json(),
       headers: { Authorization: `Bearer ${store.state.authUser}` }
     };
   }

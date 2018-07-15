@@ -6,7 +6,8 @@
         Laravel Film
       </h1>
       <div class="container links">
-        <nuxt-link to="/films" class="button--green">Films</nuxt-link>
+        <nuxt-link to="/films" class="button--green">All films</nuxt-link>
+        <nuxt-link to="/films/my-films" class="button--green">My films</nuxt-link>
         <nuxt-link to="/films/create" class="button--green">Create film</nuxt-link>
       </div>
     </div>
@@ -20,6 +21,10 @@
             <th>Photo</th>
             <th><abbr title="Title">Title</abbr></th>
             <th><abbr title="Description">Description</abbr></th>
+            <th><abbr title="Rating">Rating</abbr></th>
+            <th><abbr title="Price">Price</abbr></th>
+            <th><abbr title="Country">Country</abbr></th>
+            <th><abbr title="Genre">Genre</abbr></th>
             <th><abbr title="Created">Created</abbr></th>
             <th><abbr title="Updated">Updated</abbr></th>
             <th>Actions</th>
@@ -41,7 +46,7 @@
           </tr>
         </tfoot> -->
         <tbody>
-          <tr v-for="(item, index) in films_mine" :key="index">
+          <tr v-for="(item, index) in films" :key="index">
             <th>{{ item.id }}</th>
             <td>
               <figure class="image is-128x128">
@@ -52,6 +57,10 @@
             </td>
             <td>{{ item.title }}</td>
             <td>{{ item.description }}</td>
+            <td>{{ item.rating }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.country }}</td>
+            <td>{{ item.genre }}</td>
             <td>{{ item.created_at }}</td>
             <td>{{ item.updated_at }}</td>
             <td>
@@ -72,7 +81,6 @@ export default {
   components: {
     AppLogo
   },
-  middleware: "auth",
   data() {
     return {
       baseImgUrl: process.env.baseImgUrl,
@@ -80,14 +88,13 @@ export default {
     };
   },
   async asyncData({ store, env }) {
-    store.commit("SET_HEAD", ["Film gallery", "Manage your films here"]);
+    store.commit("SET_HEAD", ["Film gallery", "All films are here"]);
     let response = await fetch(`${env.baseUrl}/films`, {
-      method: "GET",
-      headers: { Authorization: `Bearer ${store.state.authUser}` }
+      method: "GET"
     });
 
     return {
-      films_mine: await response.json(),
+      films: await response.json(),
       headers: { Authorization: `Bearer ${store.state.authUser}` }
     };
   }

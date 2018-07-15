@@ -5,8 +5,9 @@
       <h1 class="title">
         Laravel Film
       </h1>
-      <div class="links">
-        <nuxt-link to="/films" class="button--green">Films</nuxt-link>
+      <div class="links">        
+        <nuxt-link to="/films" class="button--green">All films</nuxt-link>
+        <nuxt-link to="/films/my-films" class="button--green">My films</nuxt-link>
         <nuxt-link to="/films/create" class="button--green">Create film</nuxt-link>
         <a @click="logout" class="is-right" style="float: right;">Logout</a>
       </div>
